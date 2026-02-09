@@ -8,35 +8,36 @@ public class Philosopher implements Runnable {
 
     public Philosopher(int philosopherNumber) {
         this.philosopherNumber = philosopherNumber;
-        System.out.println("P" + philosopherNumber + " sit in the table.");
+        // System.out.println("P" + philosopherNumber + " sit in the table.");
     }
 
     @Override
     public void run() {
         while (meals < Main.totalMeals) {
 
+
             try {
                 Main.chopsticks[philosopherNumber].acquire();
-                System.out.println("P" + philosopherNumber + " pick up left chopstick.");
+                // System.out.println("P" + philosopherNumber + " pick up left chopstick.");
                 Main.chopsticks[(philosopherNumber + 1) % Main.philosopherCount].acquire();
-                System.out.println("P" + philosopherNumber + " pick up right chopstick.");
+                // System.out.println("P" + philosopherNumber + " pick up right chopstick.");
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             // eat
-            System.out.println("P" + philosopherNumber + " start eating M" + meals + ".");
+            // System.out.println("P" + philosopherNumber + " start eating M" + meals + ".");
             waiting();
             meals++;
 
             Main.chopsticks[philosopherNumber].release();
-            System.out.println("P" + philosopherNumber + " put down left chopstick.");
+            // System.out.println("P" + philosopherNumber + " put down left chopstick.");
             Main.chopsticks[(philosopherNumber + 1) % Main.philosopherCount].release();
-            System.out.println("P" + philosopherNumber + " put down right chopstick.");
+            // System.out.println("P" + philosopherNumber + " put down right chopstick.");
 
             // think
-            System.out.println("P" + philosopherNumber + " start thinking.");
+            // System.out.println("P" + philosopherNumber + " start thinking.");
             waiting();
         }
 
@@ -51,7 +52,7 @@ public class Philosopher implements Runnable {
             }
         }
         
-        System.out.println("P" + philosopherNumber + " left the table.");
+        // System.out.println("P" + philosopherNumber + " left the table.");
     }
 
     public void waiting() {
