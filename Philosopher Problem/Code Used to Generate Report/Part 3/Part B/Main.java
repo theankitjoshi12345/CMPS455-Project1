@@ -12,7 +12,6 @@ public class Main {
     public static Semaphore mutex = new Semaphore(1);
 
     public static void main(String args[]) {
-        long start_time = System.nanoTime();
         Scanner in = new Scanner(System.in);
 
         System.out.print("Enter the number of philosophers: ");
@@ -21,6 +20,8 @@ public class Main {
         // totalMeals = in.nextInt();
         // totalMeals = totalPhilosophers * 4;
         in.close();
+        
+        long start_time = System.nanoTime();
 
         // # of chopsticks = # of philosophers
         // chopsticks = new Semaphore[totalPhilosophers];
@@ -43,7 +44,7 @@ public class Main {
             try {
                 threads[i].join();
             } catch (Exception e) {
-                System.out.println("Exception has occured: "+ e);
+                System.out.println("Exception has occured: " + e);
             }
         }
                 

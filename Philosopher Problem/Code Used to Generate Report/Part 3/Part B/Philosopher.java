@@ -5,7 +5,7 @@ public class Philosopher implements Runnable {
     private static Random rand = new Random();
 
     public int philosopherNumber;
-    public int meals = 0;
+    private int meals = 0;
 
     public Philosopher(int philosopherNumber) {
         this.philosopherNumber = philosopherNumber;

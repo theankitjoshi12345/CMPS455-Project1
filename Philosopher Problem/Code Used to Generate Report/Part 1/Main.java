@@ -8,11 +8,11 @@ public class Main {
     public static int totalMeals;
 
     public static Semaphore[] chopsticks;
+    public static Semaphore mealMutex = new Semaphore(1);
     public static Semaphore semHold = new Semaphore(0);
     public static Semaphore mutex = new Semaphore(1);
 
     public static void main(String args[]) {
-        long start_time = System.nanoTime();
         Scanner in = new Scanner(System.in);
 
         System.out.print("Enter the number of philosophers: ");
@@ -20,6 +20,8 @@ public class Main {
         System.out.print("Enter total number of meals: ");
         totalMeals = in.nextInt();
         in.close();
+
+        long start_time = System.nanoTime();
 
         // # of chopsticks = # of philosophers
         chopsticks = new Semaphore[totalPhilosophers];

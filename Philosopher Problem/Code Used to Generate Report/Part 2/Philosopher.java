@@ -16,36 +16,54 @@ public class Philosopher implements Runnable {
         waitForOtherPhilosophers();
         System.out.println("P" + philosopherNumber + " sit in the table.");
 
-        while (meals < Main.totalMeals) {
+        while (true) {
+
+            try {
+                Main.mealMutex.acquire();
+            } catch (Exception e) {
+                System.out.println("Exception has occured: " + e);
+                return;
+            }
+
+            if (meals >= Main.totalMeals) {
+                Main.mealMutex.release();
+                break;
+            }
+            int currentMeal = meals;
+            meals++;
+            Main.mealMutex.release();
 
             try {
                 Main.chopsticks[philosopherNumber].acquire();
-                System.out.println("P" + philosopherNumber + " pick up left chopstick.");
-
-                Thread.yield();
-
-                Main.chopsticks[(philosopherNumber + 1) % Main.totalPhilosophers].acquire();
-                System.out.println("P" + philosopherNumber + " pick up right chopstick.");
-
-            } catch (Exception e) {
-                System.out.println("Exception has occured: "+ e);
+            }  catch (Exception e) {
+                System.out.println("Exception has occured: " + e);
+                return;
             }
+            System.out.println("P" + philosopherNumber + " pick up left chopstick.");
 
-            // eat
-            System.out.println("P" + philosopherNumber + " start eating M" + meals + ".");
+            Thread.yield();
+
+            try {
+                Main.chopsticks[(philosopherNumber + 1) % Main.totalPhilosophers].acquire();
+            }  catch (Exception e) {
+                System.out.println("Exception has occured: " + e);
+                return;
+            }
+            System.out.println("P" + philosopherNumber + " pick up right chopstick.");
+
+            System.out.println("P" + philosopherNumber + " start eating M" + currentMeal + ".");
             waiting();
-            meals++;
 
             Main.chopsticks[philosopherNumber].release();
             System.out.println("P" + philosopherNumber + " put down left chopstick.");
             Main.chopsticks[(philosopherNumber + 1) % Main.totalPhilosophers].release();
             System.out.println("P" + philosopherNumber + " put down right chopstick.");
 
-            // think
             System.out.println("P" + philosopherNumber + " start thinking.");
             waiting();
+
         }
-        
+
         waitForOtherPhilosophers();
         System.out.println("P" + philosopherNumber + " left the table.");
     }
@@ -61,7 +79,8 @@ public class Philosopher implements Runnable {
         try {
             Main.mutex.acquire();
         } catch (Exception e) {
-            System.out.println("Exception has occured: "+ e);
+            System.out.println("Exception has occured: " + e);
+            return;
         }
         waitingPhilosophers++;
         if (waitingPhilosophers == Main.totalPhilosophers) {
@@ -75,7 +94,8 @@ public class Philosopher implements Runnable {
             try {
                 Main.semHold.acquire();
             } catch (Exception e) {
-                System.out.println("Exception has occured: "+ e);
+                System.out.println("Exception has occured: " + e);
+                return;
             }
         }
         

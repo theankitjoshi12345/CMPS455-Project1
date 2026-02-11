@@ -12,12 +12,50 @@ public class Main {
     public static int maxReadingAgents; 
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
+    
+
+        // Reading Agents
         System.out.print("Enter number of Reading Agents (Non-negative Integers only): ");
-        readingAgents = in.nextInt(); // Can be any non-zero integers only
+        if (!in.hasNextInt()) {
+            System.out.println("Input Error: Reading Agents must be a non-negative integer.");
+            in.close();
+            return;
+        }
+        readingAgents = in.nextInt();
+        if (readingAgents < 0) {
+            System.out.println("Input Error: Reading Agents cannot be negative.");
+            in.close();
+            return;
+        }
+
+        // Coordinating Agents
         System.out.print("Enter number of Coordinating Agents (Non-negative Integers only): ");
-        coordinatingAgents = in.nextInt(); // Can be any non-zero integers only
+        if (!in.hasNextInt()) {
+            System.out.println("Input Error: Coordinating Agents must be a non-negative integer.");
+            in.close();
+            return;
+        }
+        coordinatingAgents = in.nextInt();
+        if (coordinatingAgents < 0) {
+            System.out.println("Input Error: Coordinating Agents cannot be negative.");
+            in.close();
+            return;
+        }
+
+        // Max Reading Agents
         System.out.print("Enter maximum number of Reading Agents (Non-zero Integers only): ");
-        maxReadingAgents = in.nextInt(); // Can be any positive integers equal to or less than reading agents.
+        if (!in.hasNextInt()) {
+            System.out.println("Input Error: Maximum Reading Agents must be a positive integer.");
+            in.close();
+            return;
+        }
+        maxReadingAgents = in.nextInt();
+        if (maxReadingAgents <= 0) {
+            System.out.println("Input Error: Maximum Reading Agents must be greater than zero.");
+            in.close();
+            return;
+        }
+
         in.close();
 
         for (int i = 0; i < readingAgents; i++) {
@@ -28,5 +66,7 @@ public class Main {
             CoordinatingThread c = new CoordinatingThread(j);
             c.start();
         }
+
+        System.out.println("Last line has been executed in \"main.java\".");
     }
 }

@@ -8,16 +8,43 @@ public class Main {
     public static int totalMeals;
 
     public static Semaphore[] chopsticks;
+    public static Semaphore mealMutex = new Semaphore(1);
     public static Semaphore semHold = new Semaphore(0);
     public static Semaphore mutex = new Semaphore(1);
 
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
 
+        // Number of Philosophers
         System.out.print("Enter the number of philosophers (Non-negative integers Only): ");
+        if (!in.hasNextInt()) {
+            System.out.println("Input Error: Number of philosophers must be a non-negative integer.");
+            in.close();
+            return;
+        }
+
         totalPhilosophers = in.nextInt();
-        System.out.print("Enter total number of meals(Non-negative integers only): ");
+        if (totalPhilosophers < 0) {
+            System.out.println("Input Error: Number of philosophers cannot be negative.");
+            in.close();
+            return;
+        }
+
+        // Total Meals
+        System.out.print("Enter total number of meals (Non-negative integers only): ");
+        if (!in.hasNextInt()) {
+            System.out.println("Input Error: Total meals must be a non-negative integer.");
+            in.close();
+            return;
+        }
+
         totalMeals = in.nextInt();
+        if (totalMeals < 0) {
+            System.out.println("Input Error: Total meals cannot be negative.");
+            in.close();
+            return;
+        }
+
         in.close();
 
         // # of chopsticks = # of philosophers
