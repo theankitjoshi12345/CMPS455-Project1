@@ -21,6 +21,9 @@ public class Philosopher implements Runnable {
             try {
                 Main.chopsticks[philosopherNumber].acquire();
                 System.out.println("P" + philosopherNumber + " pick up left chopstick.");
+
+                Thread.yield();
+
                 Main.chopsticks[(philosopherNumber + 1) % Main.totalPhilosophers].acquire();
                 System.out.println("P" + philosopherNumber + " pick up right chopstick.");
 

@@ -12,6 +12,7 @@ public class Main {
     public static Semaphore mutex = new Semaphore(1);
 
     public static void main(String args[]) {
+        long start_time = System.nanoTime();
         Scanner in = new Scanner(System.in);
 
         System.out.print("Enter the number of philosophers: ");
@@ -35,6 +36,19 @@ public class Main {
             threads[i] = new Thread(philosophers[i]);
             threads[i].start();
         }
+
+        // IMPORTANT: wait for all philosophers to finish
+        for (int i = 0; i < totalPhilosophers; i++) {
+            try {
+                threads[i].join();
+            } catch (Exception e) {
+                System.out.println("Exception has occured: "+ e);
+            }
+        }
+                
+        long end_time = System.nanoTime();
+        System.out.printf("Runtime in milliseconds = "); 
+        System.out.println((end_time - start_time) / 1000000.0); 
 
         System.out.println("Last line has been executed in \"main.java\".");
     }

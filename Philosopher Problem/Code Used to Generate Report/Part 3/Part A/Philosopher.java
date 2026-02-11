@@ -3,8 +3,8 @@ import java.util.Random;
 public class Philosopher implements Runnable {
     public static int waitingPhilosophers = 0;
     private static Random rand = new Random();
-    private static int meals = 0;
 
+    private int meals = 0;
     public int philosopherNumber;
 
     public Philosopher(int philosopherNumber) {
@@ -16,7 +16,7 @@ public class Philosopher implements Runnable {
         waitForOtherPhilosophers();
         System.out.println("P" + philosopherNumber + " sit in the table.");
 
-        while (meals < Main.totalMeals) {
+        while (meals < 4) {
 
             try {
                 Main.chopsticks[philosopherNumber].acquire();
