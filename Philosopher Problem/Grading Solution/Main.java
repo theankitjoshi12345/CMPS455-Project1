@@ -22,8 +22,14 @@ public class Main {
             in.close();
             return;
         }
-
         totalPhilosophers = in.nextInt();
+
+        if (totalPhilosophers == 1) {
+            System.out.println("1 Philosopher means 1 Chopstick. He cannot eat any meal.");
+            in.close();
+            return;
+        }
+
         if (totalPhilosophers < 0) {
             System.out.println("Input Error: Number of philosophers cannot be negative.");
             in.close();

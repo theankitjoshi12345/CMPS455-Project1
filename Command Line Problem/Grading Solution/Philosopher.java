@@ -82,6 +82,7 @@ public class Philosopher implements Runnable {
         }
         waitingPhilosophers++;
         if (waitingPhilosophers == Main.totalPhilosophers) {
+            System.out.println("All Philosophers are ready. Barrier is Open.");
             for (int i = 0; i < Main.totalPhilosophers - 1; i++) {
                 Main.semHold.release();
             }

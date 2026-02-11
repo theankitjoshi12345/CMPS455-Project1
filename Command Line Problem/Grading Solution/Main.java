@@ -35,8 +35,10 @@ public class Main {
         try {
             int param = Integer.parseInt(args[1]);
             if (param == 1) {
+                System.out.println("-A 1\nPhilosophers Problem:");
                 philosophersProblem();
             } else if (param == 2) {
+                System.out.println("-A 2\nReaders-Coordinators Problem:");
                 readersCoordinatorsProblem();
             } else {
                 System.out.println("Not a valid parameter. Use one of (1, 2).");
@@ -54,8 +56,13 @@ public class Main {
             in.close();
             return;
         }
-
         totalPhilosophers = in.nextInt();
+
+        if (totalPhilosophers == 1) {
+            System.out.println("1 Philosopher means 1 Chopstick. He cannot eat any meal.");
+            return;
+        }
+
         if (totalPhilosophers < 0) {
             System.out.println("Input Error: Number of philosophers cannot be negative.");
             in.close();
