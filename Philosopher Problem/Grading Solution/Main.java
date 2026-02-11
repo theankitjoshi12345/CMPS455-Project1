@@ -14,9 +14,9 @@ public class Main {
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
 
-        System.out.print("Enter the number of philosophers: ");
+        System.out.print("Enter the number of philosophers (Non-negative integers Only): ");
         totalPhilosophers = in.nextInt();
-        System.out.print("Enter total number of meals: ");
+        System.out.print("Enter total number of meals(Non-negative integers only): ");
         totalMeals = in.nextInt();
         in.close();
 
