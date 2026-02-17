@@ -33,21 +33,39 @@ public class Philosopher implements Runnable {
             meals++;
             Main.mealMutex.release();
 
-            try {
-                Main.chopsticks[philosopherNumber].acquire();
-            }  catch (Exception e) {
-                System.out.println("Exception has occured: " + e);
-                return;
-            }
-            System.out.println("P" + philosopherNumber + " pick up left chopstick.");
+            if (currentMeal == Main.totalMeals - 1) {
+                try {
+                    Main.chopsticks[(philosopherNumber + 1) % Main.totalPhilosophers].acquire();
+                }  catch (Exception e) {
+                    System.out.println("Exception has occured: " + e);
+                    return;
+                }
+                System.out.println("P" + philosopherNumber + " pick up right chopstick.");
 
-            try {
-                Main.chopsticks[(philosopherNumber + 1) % Main.totalPhilosophers].acquire();
-            }  catch (Exception e) {
-                System.out.println("Exception has occured: " + e);
-                return;
+                try {
+                    Main.chopsticks[philosopherNumber].acquire();
+                }  catch (Exception e) {
+                    System.out.println("Exception has occured: " + e);
+                    return;
+                }
+                System.out.println("P" + philosopherNumber + " pick up left chopstick.");
+            } else {
+                try {
+                    Main.chopsticks[philosopherNumber].acquire();
+                }  catch (Exception e) {
+                    System.out.println("Exception has occured: " + e);
+                    return;
+                }
+                System.out.println("P" + philosopherNumber + " pick up left chopstick.");
+
+                try {
+                    Main.chopsticks[(philosopherNumber + 1) % Main.totalPhilosophers].acquire();
+                }  catch (Exception e) {
+                    System.out.println("Exception has occured: " + e);
+                    return;
+                }
+                System.out.println("P" + philosopherNumber + " pick up right chopstick.");
             }
-            System.out.println("P" + philosopherNumber + " pick up right chopstick.");
 
             System.out.println("P" + philosopherNumber + " start eating M" + currentMeal + ".");
             waiting();
