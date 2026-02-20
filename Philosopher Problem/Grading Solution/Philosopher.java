@@ -13,8 +13,9 @@ public class Philosopher implements Runnable {
 
     @Override
     public void run() {
-        waitForOtherPhilosophers();
-        System.out.println("P" + philosopherNumber + " sit in the table.");
+        System.out.println("P" + philosopherNumber + " has arrived in the room.");
+        waitForOtherPhilosophers(" are sitting together in ");
+        // System.out.println("P" + philosopherNumber + " sit in the table.");
 
         while (true) {
 
@@ -33,7 +34,7 @@ public class Philosopher implements Runnable {
             meals++;
             Main.mealMutex.release();
 
-            if (currentMeal == Main.totalMeals - 1) {
+            if (philosopherNumber == Main.totalPhilosophers - 1) {
                 try {
                     Main.chopsticks[(philosopherNumber + 1) % Main.totalPhilosophers].acquire();
                 }  catch (Exception e) {
@@ -80,8 +81,8 @@ public class Philosopher implements Runnable {
 
         }
 
-        waitForOtherPhilosophers();
-        System.out.println("P" + philosopherNumber + " left the table.");
+        waitForOtherPhilosophers(" getting up together from ");
+        System.out.println("P" + philosopherNumber + " left the room.");
     }
 
     public void waiting() {
@@ -91,7 +92,7 @@ public class Philosopher implements Runnable {
         }
     }
     
-    public void waitForOtherPhilosophers() {
+    public void waitForOtherPhilosophers(String msg) {
         try {
             Main.mutex.acquire();
         } catch (Exception e) {
@@ -100,7 +101,7 @@ public class Philosopher implements Runnable {
         }
         waitingPhilosophers++;
         if (waitingPhilosophers == Main.totalPhilosophers) {
-            System.out.println("All Philosophers are ready. Barrier is Open.");
+            System.out.println("All Philosophers are" + msg + "the dinning table.");
             for (int i = 0; i < Main.totalPhilosophers - 1; i++) {
                 Main.semHold.release();
             }

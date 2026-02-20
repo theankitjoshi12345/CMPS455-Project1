@@ -13,7 +13,7 @@ public class Philosopher implements Runnable {
 
     @Override
     public void run() {
-        waitForOtherPhilosophers();
+        // waitForOtherPhilosophers();
         System.out.println("P" + philosopherNumber + " sit in the table.");
 
         while (meals < 4) {
@@ -43,7 +43,7 @@ public class Philosopher implements Runnable {
             waiting();
         }
         
-        waitForOtherPhilosophers();
+        //waitForOtherPhilosophers();
         System.out.println("P" + philosopherNumber + " left the table.");
     }
 

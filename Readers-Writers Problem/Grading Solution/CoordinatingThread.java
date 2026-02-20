@@ -17,17 +17,20 @@ public class CoordinatingThread extends Thread {
             } catch (Exception e) {
                 System.out.println("Exception has occured: " + e);
             }
-        } else {
-            Main.wTurn.release();
         }
-        
 
+        try {
+            Main.sharedFile.acquire();
+        } catch (InterruptedException e) {
+            System.out.println("Exception has occured: " + e);
+        }
         System.out.println("CA"+ agentNumber + " is coordinating.");
         for (int i = 0; i < rand.nextInt(10) + 11; i++) {
             // Coordinating.
         }
-        enteredAgents++;
+        Main.sharedFile.release();
 
+        enteredAgents++;
         if (ReadingThread.enteredAgents == Main.readingAgents) {
             Main.wTurn.release();
         } else {
